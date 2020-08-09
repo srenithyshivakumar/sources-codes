@@ -1,0 +1,319 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+struct bank{
+long int acno;
+char name[100];
+char lastname[100];
+char fname[100];
+long int aadno;
+long int phno;
+char email[100];;
+char acntype[50];
+long int accntbal;
+}s[100];
+int phn(struct bank s[100],int n,long int phnum){
+    int i,flag=0,c=0,r;
+    for(i=0;i<n;i++){
+        if(phnum==s[i].phno)
+        {
+            flag=1;
+            break;
+        }
+    }
+    while(phnum>0){
+        r=phnum%10;
+        c++;
+        phnum=phnum/10;
+    }
+    if((c==10)&&((r==6)||(r==7)||(r==8)||(r==9))&&flag==0)
+    return 1;
+    else
+    return 0;
+    
+}
+int aadhar_no(struct bank s[100],long int aadhar,int n)
+{
+    int i,flag=0,c=0;
+    for(i=0;i<n;i++)
+    {
+       if(aadhar==s[i].aadno)
+       {
+         flag=1;
+         break;
+       }
+      
+    }
+    
+    while(aadhar>0)
+    {
+       
+        c++;
+        aadhar=aadhar/10;
+    }
+    
+    if((c==12)&&(flag==0))
+    {
+        return 1;
+    }
+    else
+      return 0;
+}
+int acnt_no(struct bank s[100],long int acn,int n)
+{
+    int i,flag=0,c=0;
+    for(i=0;i<n;i++)
+    {
+       if(acn==s[i].acno)
+       {
+         flag=1;
+         break;
+       }
+      
+    }
+    
+   
+    
+    if(flag==0)
+    {
+        return 1;
+    }
+    else
+      return 0;
+}
+int name_val(struct bank s[100],int n,char name[100] )
+{
+    int i,flag=0;
+    for(i=0;i<strlen(name);i++)
+    {
+        if(((name[i]>='a')&&(name[i]<='z'))||((name[i]>='A')&&(name[i]<='Z')))
+      {
+          flag=0;
+      }  
+      else
+      {
+          flag=1;
+          break;
+      }
+    }
+    if(flag==0)
+    {
+        return 1;
+    }
+    else
+     return 0;
+}
+int emailfn(struct bank s1[100],char emailid[100],int n)
+{
+    int i,flag=0,flag1=0;
+    for(i=0;i<n;i++)
+    {
+       if(strcmp(emailid,s[i].email)==0)
+       {
+         flag=1;
+         break;
+        
+      }
+    }
+      // for(i=0;i<n;i++)
+      // {
+          // if(emailid[i]=='@')
+          // {
+           //    flag1=1;
+        //   }
+       //}
+      if((flag==0))
+      {
+          return 1;
+      }
+      else
+      return 0;
+    
+}
+int printdet(struct bank s[100],int n,long int mob){
+    int i,count=-1;
+    for(i=0;i<n;i++){
+        if(s[i].phno==mob){
+
+            count=i;
+           break;
+    }
+    }
+    if(count!=-1)
+     return count;
+     else
+     {
+         printf(" No such phno exist in database");
+         return count;
+     }
+}
+int printdet1(struct bank s[100],int n,long int acn){
+    int i,count=-1;
+    for(i=0;i<n;i++){
+        if(s[i].acno==acn){
+
+            count=i;
+           break;
+    }
+    }
+    if(count!=-1)
+     return count;
+     else
+     {
+         printf(" No such phno exist in database");
+         return count;
+     }
+}
+
+int main()
+{
+int n ,i,count=0,c,r,m1,m2,m3,p,k,l,mobile,h=0,j,jh,e,v;
+long int phnum,aadhar,acbal,mob,acn;
+char fname[100],lname[100],father[100],emailid[100],actype[50];
+printf("enter 1 for adding users and 2 for making transactions");
+printf("\n");
+scanf("%d",&k);
+if(k==1){
+scanf("%d",&n);
+for(i=0;i<n;i++){
+ if(i==0)
+ {
+   
+   printf("first person first name:");
+  scanf("%s",fname);
+  printf("first person surname:");
+  scanf("%s",lname);
+  printf("first person  father's name:");
+  scanf("%s",father);
+  printf("first person phn num");
+   scanf("%ld",&s[i].phno);
+   printf("first person aadhar num");
+   scanf("%ld",&s[i].aadno);
+   printf(" first person account number");
+   scanf("%ld",&s[i].acno);
+   printf("first person email id");
+   scanf("%s",emailid);
+   printf("first person account type  ");
+   scanf("%s",actype);
+   printf("first person account balance  ");
+   scanf("%ld",&acbal);
+   count++;
+ }
+ else{
+     printf("enter the person %d first name :\n",i+1);
+    scanf("%s",fname);
+    printf("enter the person %d last name :\n",i+1);
+     scanf("%s",lname);
+      printf("enter the person %d father's name :\n",i+1);
+     scanf("%s",father);
+    printf("enter the person %d phone number :\n",i+1); 
+     scanf("%ld",&phnum);
+     printf("enter the person %d aadhar number: \n",i+1);
+     scanf("%ld",&aadhar);
+      printf("enter the person %d account number: \n",i+1);
+     scanf("%ld",&acn);
+     
+     printf("enter the person %d email id :\n",i+1);
+     scanf("%s",emailid);
+     printf("enter the person %d account type:\n",i+1);
+     scanf("%s",actype);
+     printf("enter the person %d account balance:\n",i+1);
+     scanf("%ld",&acbal);
+     p=emailfn(s,emailid,count);
+     m1=name_val(s,count,fname);
+     m2=name_val(s,count,lname);
+     m3=name_val(s,count,father);
+     r=aadhar_no(s,aadhar,count);
+     c=phn(s,count,phnum);
+     j=acnt_no(s,acn,count);
+      
+     if((c==1)&&(r==1)&&(m1==1)&&(m2==1)&&(m3==1)&&(p==1)&&(j==1))
+     
+    {
+     strcpy(s[i].email,emailid);
+     strcpy(s[i].name,fname);
+     strcpy(s[i].lastname,lname);
+     strcpy(s[i].fname,father);
+     strcpy(s[i].acntype,actype);
+     
+     s[i].acno=acn;
+     s[i].phno=phnum;
+     s[i].aadno=aadhar;
+     s[i].accntbal=acbal;
+     count++;
+    }
+     else{
+     printf("already exist or invalid");
+     printf("Enter the person%d details once again",i+1);
+     i--;
+     printf("\n");
+     }
+    }
+  
+ }
+    printf("Entered users are registered successfully   :)  ");
+    printf("\n");
+    printf("\n");
+    printf(" press 1 to perform transaction  2. To exit");
+    scanf("%d",&h);
+    if(h==1)
+     k=2;
+    else
+     k=1;
+}
+ if(k==2){
+    printf("choose what you  need to perform");
+    printf("\n");
+    printf("1.printing user details by giving mobile number     2.for making transactions    3.printing the details"   );
+    scanf("%d",&l);
+    if(l==1){
+        printf(" Enter your mobile number");
+        scanf("%ld",&mob);
+        mobile=printdet(s,count,mob);
+        printf("%d",mobile);
+        if(mobile!=-1){
+            printf("%s",s[mobile].name);
+            printf("\n");
+            printf("%ld",s[mobile].acno);
+            printf("\n");
+            printf("%ld",s[mobile].aadno);
+            printf("\n");
+            printf("%s",s[mobile].email);
+        }
+    }
+    
+    if(l==2){
+        printf("Enter your account number");
+        scanf("%ld",&acn);
+        jh=printdet1(s,count,acn);
+        printf("1.For withdraw  2.credit");
+        scanf("%d",&e);
+        if(e==1){
+            printf(" Enter amount");
+            scanf("%d",&v);
+            s[jh].accntbal=s[jh].accntbal-v;
+            printf("\n");
+            printf(" current balance");
+            printf("%ld",s[jh].accntbal);
+        }
+        if(e==2){
+            printf("Enter amount to be credited");
+            scanf("%d",&v);
+             s[jh].accntbal=s[jh].accntbal+v;
+            printf("\n");
+            printf(" current balance");
+            printf("%ld",s[jh].accntbal);
+            
+        }
+    }
+    printf("Printing the list of names and account balance");
+    for(i=0;i<count;i++){
+       
+       printf("%s",s[i].name);
+       printf("\t---");
+       printf("%ld",s[i].accntbal);
+       
+    }
+ }
+ return 0;
+}
